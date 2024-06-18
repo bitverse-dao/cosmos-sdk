@@ -379,7 +379,7 @@ func startCmtNode(
 		cfg,
 		pvm.LoadOrGenFilePV(cfg.PrivValidatorKeyFile(), cfg.PrivValidatorStateFile()),
 		nodeKey,
-		proxy.NewLocalClientCreator(cmtApp),
+		proxy.NewUnsynchronizedLocalClientCreator(cmtApp),
 		getGenDocProvider(cfg),
 		cmtcfg.DefaultDBProvider,
 		node.DefaultMetricsProvider(cfg.Instrumentation),
