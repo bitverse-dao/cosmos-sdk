@@ -196,3 +196,5 @@ retract (
 	// do not use
 	v0.43.0
 )
+
+replace github.com/cometbft/cometbft => github.com/bitverse-dao/cometbft v0.38.7-0.20240618025147-b6e2db4bb824
