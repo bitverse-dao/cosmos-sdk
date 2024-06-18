@@ -131,6 +131,7 @@ func AddGovPropFlagsToCmd(cmd *cobra.Command) {
 	cmd.Flags().String(FlagMetadata, "", "The metadata to include with the governance proposal")
 	cmd.Flags().String(FlagTitle, "", "The title to put on the governance proposal")
 	cmd.Flags().String(FlagSummary, "", "The summary to include with the governance proposal")
+	cmd.Flags().Bool(FlagExpedited, false, "Whether to expedite the governance proposal")
 }
 
 // ReadGovPropFlags parses a MsgSubmitProposal from the provided context and flags.
@@ -167,6 +168,11 @@ func ReadGovPropFlags(clientCtx client.Context, flagSet *pflag.FlagSet) (*govv1.
 	}
 
 	rv.Proposer = clientCtx.GetFromAddress().String()
+
+	rv.Expedited, err = flagSet.GetBool(FlagExpedited)
+	if err != nil {
+		return nil, fmt.Errorf("could not read expedited: %w", err)
+	}
 
 	return rv, nil
 }
