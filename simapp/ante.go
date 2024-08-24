@@ -2,6 +2,7 @@ package simapp
 
 import (
 	"errors"
+	"github.com/cosmos/cosmos-sdk/baseapp"
 
 	circuitante "cosmossdk.io/x/circuit/ante"
 
@@ -32,6 +33,7 @@ func NewAnteHandler(options HandlerOptions) (sdk.AnteHandler, error) {
 	}
 
 	anteDecorators := []sdk.AnteDecorator{
+		baseapp.NewLockAndCacheContextAnteDecorator(),
 		ante.NewSetUpContextDecorator(), // outermost AnteDecorator. SetUpContext must be called first
 		circuitante.NewCircuitBreakerDecorator(options.CircuitKeeper),
 		ante.NewExtensionOptionsDecorator(options.ExtensionOptionChecker),
