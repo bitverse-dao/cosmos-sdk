@@ -130,6 +130,11 @@ func (app *BaseApp) SetName(name string) {
 	app.name = name
 }
 
+// SetTxExecutor sets a custom tx executor for the BaseApp, usually for parallel execution.
+func SetTxExecutor(executor TxExecutor) func(*BaseApp) {
+	return func(app *BaseApp) { app.txExecutor = executor }
+}
+
 // SetParamStore sets a parameter store on the BaseApp.
 func (app *BaseApp) SetParamStore(ps ParamStore) {
 	if app.sealed {
