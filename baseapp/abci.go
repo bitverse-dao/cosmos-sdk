@@ -778,7 +778,8 @@ func (app *BaseApp) internalFinalizeBlock(ctx context.Context, req *abci.Request
 	app.finalizeBlockState.SetContext(
 		app.finalizeBlockState.Context().
 			WithBlockGasMeter(gasMeter).
-			WithTxCount(len(req.Txs)))
+			WithTxCount(len(req.Txs)),
+	)
 
 	// Iterate over all raw transactions in the proposal and attempt to execute
 	// them, gathering the execution results.
