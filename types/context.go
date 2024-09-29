@@ -74,6 +74,8 @@ type Context struct {
 	txCount int
 	// sum the gas used by all the transactions in the current block, only accessible by end blocker
 	blockGasUsed uint64
+	// sum the gas wanted by all the transactions in the current block, only accessible by end blocker
+	blockGasWanted uint64
 }
 
 // Proposed rename, not done to avoid API breakage
@@ -101,11 +103,11 @@ func (c Context) TransientKVGasConfig() storetypes.GasConfig    { return c.trans
 func (c Context) StreamingManager() storetypes.StreamingManager { return c.streamingManager }
 func (c Context) CometInfo() comet.BlockInfo                    { return c.cometInfo }
 func (c Context) HeaderInfo() header.Info                       { return c.headerInfo }
-
-func (c Context) TxIndex() int         { return c.txIndex }
-func (c Context) MsgIndex() int        { return c.msgIndex }
-func (c Context) TxCount() int         { return c.txCount }
-func (c Context) BlockGasUsed() uint64 { return c.blockGasUsed }
+func (c Context) TxIndex() int                                  { return c.txIndex }
+func (c Context) MsgIndex() int                                 { return c.msgIndex }
+func (c Context) TxCount() int                                  { return c.txCount }
+func (c Context) BlockGasUsed() uint64                          { return c.blockGasUsed }
+func (c Context) BlockGasWanted() uint64                        { return c.blockGasWanted }
 
 // clone the header before returning
 func (c Context) BlockHeader() cmtproto.Header {
@@ -344,6 +346,11 @@ func (c Context) WithMsgIndex(msgIndex int) Context {
 
 func (c Context) WithBlockGasUsed(gasUsed uint64) Context {
 	c.blockGasUsed = gasUsed
+	return c
+}
+
+func (c Context) WithBlockGasWanted(gasWanted uint64) Context {
+	c.blockGasWanted = gasWanted
 	return c
 }
 
